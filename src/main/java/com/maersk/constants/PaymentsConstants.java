@@ -17,9 +17,10 @@ public class PaymentsConstants {
     public static final String INTERNAL_SERVER_ERROR = "001";
 
     public static final String RESOURCE_TOKENS = "/tokens";
+    public static final String RESOURCE_CARDS = "/cards";
+    public static final String RESOURCE_CARD = "/card";
     public static final Integer VALUE_VISA_MASTERCARD = 123;
     public static final Integer VALUE_AMEX = 4532;
     public static final String REQ_HEADER_AUTHORIZATE = "Authorization";
 
-    public static final String VALUE_SECRET = "secret";
 }
