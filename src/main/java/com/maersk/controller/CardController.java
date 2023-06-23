@@ -3,6 +3,8 @@ package com.maersk.controller;
 import com.maersk.constants.PaymentsConstants;
 import com.maersk.dto.request.CardPaymentRequestDTO;
 import com.maersk.dto.response.CardPaymentResponseDTO;
+import com.maersk.dto.response.CardResponseDTO;
+import com.maersk.service.CardService;
 import com.maersk.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,10 +23,11 @@ import java.security.NoSuchAlgorithmException;
 @RequiredArgsConstructor
 @RequestMapping(PaymentsConstants.API_VERSION + PaymentsConstants.RESOURCE_CARDS)
 public class CardController {
-
+    final CardService cardService;
     @GetMapping(PaymentsConstants.RESOURCE_CARD)
-    public ResponseEntity<CardPaymentResponseDTO> getCard(@Valid @RequestBody CardPaymentRequestDTO cardPaymentRequestDTO ,
-                                                           @RequestHeader(value = PaymentsConstants.REQ_HEADER_AUTHORIZATE) String token) throws NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-      return null;
+    public ResponseEntity<CardResponseDTO> getCard(@Valid @RequestParam String idCard,
+                                                   @RequestHeader(value = PaymentsConstants.REQ_HEADER_AUTHORIZATE) String token)
+            throws Exception {
+        return new ResponseEntity<>(cardService.getCard(idCard,token),HttpStatus.OK);
     }
 }
