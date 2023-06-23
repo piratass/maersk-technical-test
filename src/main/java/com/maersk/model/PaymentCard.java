@@ -2,18 +2,18 @@ package com.maersk.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="t_payment_card")
 @Data
 public class PaymentCard {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    String id;
+    Long id;
+    @Column(name="idCard")
+    String idCard;
     @Column(name="cardNumber")
     String cardNumber;
     @Column(name="expireYear")

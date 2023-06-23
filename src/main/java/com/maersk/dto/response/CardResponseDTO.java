@@ -1,10 +1,7 @@
 package com.maersk.dto.response;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Size;
-
-import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 @Data
 public class CardResponseDTO {

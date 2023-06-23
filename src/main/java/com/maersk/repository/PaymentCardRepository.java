@@ -3,5 +3,8 @@ package com.maersk.repository;
 import com.maersk.model.PaymentCard;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PaymentCardRepository extends CrudRepository<PaymentCard,String> {
+import java.util.Optional;
+
+public interface PaymentCardRepository extends CrudRepository<PaymentCard,Long> {
+    Optional<PaymentCard> findPaymentCardByIdCard(String id);
 }

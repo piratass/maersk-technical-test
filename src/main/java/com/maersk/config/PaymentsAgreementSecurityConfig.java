@@ -21,6 +21,7 @@ public class PaymentsAgreementSecurityConfig extends WebSecurityConfigurerAdapte
 
         httpSecurity.authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/v1/tokens").permitAll()
+                .antMatchers(HttpMethod.GET,"/v1/cards/card").permitAll()
                 .anyRequest().authenticated();
     }
 

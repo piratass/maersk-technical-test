@@ -15,7 +15,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
-import java.util.stream.LongStream;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +22,7 @@ public class TokenServiceImpl implements TokenService{
 
     final HsmService hsmService;
     final PaymentCardRepository paymentCardRepository;
+
     @Override
     public CardPaymentResponseDTO getToken(CardPaymentRequestDTO cardPaymentRequestDTO, String token) throws NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         validateHeaderTokens(token);
@@ -33,15 +33,15 @@ public class TokenServiceImpl implements TokenService{
     public CardPaymentResponseDTO saveToken(CardPaymentRequestDTO payment) throws NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         PaymentCard paymentCard = new PaymentCard();
         Random random = new Random();
-        LongStream valueRandom=random.longs(Long.parseLong("1000000000000000"),Long.parseLong("9999999999999999"));
-        paymentCard.setId(hsmService.encode(valueRandom.toString()));
+        Long n = random.nextLong(Long.parseLong("999999999999999000"),Long.parseLong("999999999999999999"));
+        paymentCard.setIdCard(Long.toHexString(n));
         paymentCard.setCardNumber(hsmService.encode(payment.getCardNumber().toString()));
         paymentCard.setEmail(hsmService.encode(payment.getEmail()));
         paymentCard.setExpireMoth(hsmService.encode(payment.getExpireMoth()));
         paymentCard.setExpireYear(hsmService.encode(payment.getExpireYear()));
         paymentCard=paymentCardRepository.save(paymentCard);
         CardPaymentResponseDTO cardPaymentResponseDTO = new CardPaymentResponseDTO();
-        cardPaymentResponseDTO.setToken(paymentCard.getId());
+        cardPaymentResponseDTO.setToken(paymentCard.getIdCard());
         return cardPaymentResponseDTO;
     }
     public void validateCardPaymentRequestDTO(CardPaymentRequestDTO cardPaymentRequestDTO){
